@@ -1,5 +1,3 @@
-'use client';
-
 import type { Note, NoteTag } from '../types/note';
 import axios from 'axios';
 
@@ -19,14 +17,18 @@ interface NewNote {
 }
 
 export const fetchNotes = async (
-  search: string,
-  page: number,
+  search?: string,
+  page = 1,
+  tag?: string,
 ): Promise<NoteHTTPResponse> => {
   const response = await axios.get<NoteHTTPResponse>('/notes', {
     params: {
       page,
       perPage: 12,
-      search,
+      // search,
+      // tag,
+      ...(search ? { search } : {}),
+      ...(tag ? { tag } : {}),
     },
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
@@ -54,7 +56,7 @@ export const deleteNote = async (noteId: string): Promise<Note> => {
   return response.data;
 };
 
-export const fetchNoteById = async (id: string): Promise<Note> => {
+export const fetchNoteById = async (id?: string): Promise<Note> => {
   const response = await axios.get<Note>(`/notes/${id}`, {
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,

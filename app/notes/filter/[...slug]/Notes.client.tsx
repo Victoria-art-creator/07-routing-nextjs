@@ -11,15 +11,24 @@ import SearchBox from '@/components/SearchBox/SearchBox';
 import NoteForm from '@/components/NoteForm/NoteForm';
 import Modal from '@/components/Modal/Modal';
 
-export default function App() {
+interface NotesClientProps {
+  tag: string;
+}
+
+export default function NotesClient({ tag }: NotesClientProps) {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [debouncedQuery] = useDebounce(query, 500);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['notes', debouncedQuery, page],
-    queryFn: () => fetchNotes(debouncedQuery, page),
+    queryKey: ['notes', tag, debouncedQuery, page],
+    queryFn: () =>
+      fetchNotes(
+        debouncedQuery || undefined,
+        page,
+        tag === 'all' ? undefined : tag,
+      ),
     placeholderData: keepPreviousData,
   });
 
