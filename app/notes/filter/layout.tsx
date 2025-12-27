@@ -1,4 +1,4 @@
-import './layout.module.css';
+import css from './layout.module.css';
 
 type Props = {
   children: React.ReactNode;
@@ -7,10 +7,9 @@ type Props = {
 
 export default function NotesLayout({ children, sidebar }: Props) {
   return (
-    <section>
-      <aside style={{ display: 'flex', gap: 24 }}>{sidebar}</aside>
-      <hr />
-      <div style={{ flex: 1 }}>{children}</div>
+    <section className={css.container}>
+      <aside className={css.sidebar}>{sidebar}</aside>
+      <div className={css.notesWrapper}>{children}</div>
     </section>
   );
 }

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 type Props = {
   children: React.ReactNode;
-  onClose?: () => void;
+  onClose: () => void;
 };
 
 const Modal = ({ children }: Props) => {
