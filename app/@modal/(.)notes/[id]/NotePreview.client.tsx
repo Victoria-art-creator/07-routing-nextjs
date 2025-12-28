@@ -20,6 +20,7 @@ export default function NotePreviewClient({ noteId }: NotePreviewProps) {
   } = useQuery({
     queryKey: ['note', noteId],
     queryFn: () => fetchNoteById(noteId),
+    refetchOnMount: false,
   });
 
   const handleClose = () => {
@@ -46,14 +47,6 @@ export default function NotePreviewClient({ noteId }: NotePreviewProps) {
       </Modal>
     );
   }
-
-  // return (
-  //   <Modal onClose={handleClose}>
-  //     <h2>{note.title}</h2>
-  //     <p>{note.content}</p>
-  //     <p>{note.tag}</p>
-  //   </Modal>
-  // );
 
   return (
     <Modal onClose={handleClose}>
